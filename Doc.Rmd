@@ -1,0 +1,65 @@
+---
+title: "Analysis template v0.1"
+always_allow_html: yes
+output:
+ pdf_document:
+  keep_tex: yes
+  toc: yes
+  toc_depth: 4
+ html_document:
+  toc: yes
+  toc_depth: 4
+---
+
+_Analysis time - `r date()`_  
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 120)
+```
+
+## Summary
+
+User's input
+
+## Population selection
+
+Ranked by the dependent variable by descending order, the top `r sprintf("%1.2f%%", cutoff*100)` population has been selected for this analysis.  
+
+## Variable distribution
+
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+for (i in x) {
+  # print(
+  #   ggplot(data, aes(x=data[[i]])) + 
+  #     geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+  #                    binwidth=.5, colour="black", fill="white") +
+  #     geom_density(alpha=.2, fill="deepskyblue") +
+  #     ggtitle(paste0('Histogram & Density - ', i))
+  # )
+  hist(data[[i]] 
+       ,main=(i)
+       ,col='grey'
+       ,xlab=i,
+       ,prob=T)
+  lines(density(data[[i]])
+        ,col='blue')
+}
+# dev.off()
+```
+
+## Leaflet
+
+```{r, echo=FALSE, fig.width=10, fig.height=7.5}
+leaf_plot
+```
+
+## Data points
+
+```{r, echo=FALSE}
+kable(datapoints, digits=2)
+```
+
+
+
